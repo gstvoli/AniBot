@@ -37,8 +37,8 @@ class AnimeBotUI(ctk.CTk):
     
     def iniciar_bot(self):
         # Lembre-se de usar o 'r' antes das aspas no Windows 
-        pasta_raiz = r"G:\Meu Drive\SERVER\Animes\0temp\Testes_origem"
-        pasta_no_drive = r"G\Meu Drive\SERVER\Animes\0temp\Animes_Teste"
+        pasta_raiz = r"G:\Meu Drive\SERVER\Animes\0temp\Animes_Teste"
+        pasta_no_drive = r"G:\Meu Drive\SERVER\Animes\0temp\Testes_origem"
 
         self.adicionar_log("Iniciando bot em segundo plano...")
         self.btn_start.configure(state="disabled")
