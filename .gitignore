@@ -1,2 +1,7 @@
-__pycache__
+__pycache__/
 .env
+*.pyc
+
+*.db
+*.sqlite3
+animebot.db

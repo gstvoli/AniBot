@@ -1,6 +1,14 @@
 import shutil
 from pathlib import Path
 import time
+from tkinter import messagebox
+
+    
+def pergunta_excluir_pasta(self, nome_pasta):
+    return messagebox.askyesno(
+        "Pasta Vazia",
+        f"A pasta '{nome_pasta}' ficou vazia após a organização.\n Deseja apagá-la?"
+    )
 
 def mover_animes(pasta_origem, pasta_destino, atualizar_tela):
     """
@@ -59,4 +67,4 @@ def mover_animes(pasta_origem, pasta_destino, atualizar_tela):
             else:
                 atualizar_tela("Ação cancelada: A pasta vazia foi mantida.")
 
-    atualizar_tela("Processo finalizado.")
+    atualizar_tela("Processo finalizado.")    
