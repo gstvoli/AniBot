@@ -1,14 +1,10 @@
-# 🤖 AniBot
+  <h1 align="center">Anibot</h1>
+<p align="center">
+  <img src="assets/anibot_exe.png" width="200">
+</p>
 
 O **AniBot** é uma aplicação desktop desenvolvida em Python para automatizar a organização de arquivos de vídeo (animes). Ele monitora uma pasta de origem (como a pasta de Downloads) e move automaticamente os arquivos de vídeo válidos para uma pasta de destino, mantendo um log de operações em tempo real na tela.
 
----
-
-## 📸 Capturas de Tela
-
-> _(Coloque aqui as imagens do seu bot rodando. Salve as imagens numa pasta chamada `assets` e substitua os links abaixo.)_
-
-![Anibot](assets/anibot_exe.png)
 
 ---
 
