@@ -3,7 +3,7 @@ import datetime
 import threading
 from tkinter import messagebox, filedialog
 
-from core.bot_logic import mover_animes
+from core.bot_logic import move_animes
 from database.connection import SessionLocal
 from database.models import FolderConfig
 
@@ -126,7 +126,7 @@ class AnimeBotUI(ctk.CTk):
         self.btn_start.configure(state="disabled")
 
         thread = threading.Thread(
-            target=mover_animes,
+            target=move_animes,
             args=(self.origin_folder, self.destination_folder, self.add_log),
             daemon=True
         )
