@@ -5,7 +5,6 @@
 
 O **AniBot** é uma aplicação desktop desenvolvida em Python para automatizar a organização de arquivos de vídeo (animes). Ele monitora uma pasta de origem (como a pasta de Downloads) e move automaticamente os arquivos de vídeo válidos para uma pasta de destino, mantendo um log de operações em tempo real na tela.
 
-
 ---
 
 ## ✨ Funcionalidades
@@ -70,7 +69,7 @@ Antes de rodar a aplicação pela primeira vez, crie a estrutura física do banc
 alembic upgrade head
 ```
 
-> Isso vai ler o histórico da pasta `alembic/versions` e gerar o arquivo local `animebot.db`.
+> Isso vai ler o histórico da pasta `alembic/versions` e gerar o arquivo local `anbot.db`.
 
 ### 4. Iniciar o AniBot
 
