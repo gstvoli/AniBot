@@ -5,7 +5,7 @@ from tkinter import messagebox, filedialog
 
 from core.bot_logic import move_animes
 from database.connection import SessionLocal
-from database.models import FolderConfig
+from database.models import Configurations
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -46,11 +46,12 @@ class AnimeBotUI(ctk.CTk):
     def load_configs(self):
         db = SessionLocal()
 
-        config = db.query(FolderConfig).filter(FolderConfig.active == 1).first()
+        config = db.query(Configurations).filter(Configurations.active == 1).first()
 
         if config:
             self.origin_folder = config.origin_folder
             self.destination_folder = config.destination_folder
+            
         else:
             self.origin_folder = ''
             self.destination_folder = ''
@@ -67,7 +68,7 @@ class AnimeBotUI(ctk.CTk):
         window_config.title("Configurações")
 
         largura_janela = 500
-        altura_janela = 300
+        altura_janela = 250
         pos_x = (self.largura_ecra // 2) - (largura_janela // 2)
         pos_y = (self.altura_ecra // 2) - (altura_janela // 2)
         window_config.geometry(f"{largura_janela}x{altura_janela}+{pos_x}+{pos_y}")
@@ -101,13 +102,14 @@ class AnimeBotUI(ctk.CTk):
         self.destination_folder = destination
 
         db = SessionLocal()
-        config = db.query(FolderConfig).filter(FolderConfig.active == 1).first()
+        config = db.query(Configurations).filter(Configurations.active == 1).first()
 
         if config:
             config.origin_folder = origin
             config.destination_folder = destination
+            self.add_log("Configurações carregadas com sucesso!")
         else:
-            new_config = FolderConfig(origin_folder=origin, destination_folder=destination)
+            new_config = Configurations(origin_folder=origin, destination_folder=destination)
             db.add(new_config)
             
         db.commit()
