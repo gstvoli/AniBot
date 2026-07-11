@@ -11,10 +11,10 @@ class Configurations(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     origin_folder: Mapped[str] = mapped_column(String[100], nullable=False)
     destination_folder: Mapped[str] = mapped_column(String[100], nullable=False)
-    active: Mapped[bool] = mapped_column(Boolean, default=False)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.utcnow,
+        default=datetime.now,
         server_default=func.now(),
     )
     updated_at: Mapped[datetime] = mapped_column(
@@ -26,7 +26,7 @@ class Configurations(Base):
     )
 
 class ExistentsFolders(Base):
-    __tablename__ = 'existents_folder'
+    __tablename__ = 'existents_folders'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     folder_name: Mapped[str] = mapped_column(String[100], nullable=False)
@@ -65,8 +65,8 @@ class RemovableTags(Base):
         server_onupdate=func.now(),
     )    
 
-class Medias(Base):
-    __tablename__ = 'medias'
+class Media(Base):
+    __tablename__ = 'media'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     media_name: Mapped[str] = mapped_column(String[150], nullable=False)
@@ -85,7 +85,7 @@ class Medias(Base):
     media_nsfw: Mapped[Optional[bool]] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.utcnow,
+        default=datetime.now(),
         server_default=func.now(),
     )
     updated_at: Mapped[datetime] = mapped_column(
@@ -100,7 +100,7 @@ class Medias(Base):
         secondary="media_genre", back_populates="medias"
     )
     episodes: Mapped[List["MediaEpisodes"]] = relationship(
-        back_populates="medias", cascade="all, delete-orphan"
+        back_populates="media", cascade="all, delete-orphan"
     )
     
 
@@ -108,7 +108,7 @@ class MediaEpisodes(Base):
     __tablename__ = 'media_episodes'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    media_id: Mapped[int] = mapped_column(ForeignKey("medias.id"), nullable=False)
+    media_id: Mapped[int] = mapped_column(ForeignKey("media.id"), nullable=False)
     episode_title: Mapped[str] = mapped_column(String[80], nullable=False)
     episode_synopsis: Mapped[str] = mapped_column(String[100], nullable=True)
     episode_duration: Mapped[int] = mapped_column(Integer, nullable=True)
@@ -125,7 +125,7 @@ class MediaEpisodes(Base):
         server_onupdate=func.now(),
     )    
 
-    media: Mapped["Medias"] = relationship(back_populates="episodes")
+    media: Mapped["Media"] = relationship(back_populates="episodes")
 
 class Genre(Base):
     __tablename__ = "genres"
@@ -133,10 +133,14 @@ class Genre(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String[50], unique=True, nullable=False)
 
+    medias: Mapped[List["Media"]] = relationship(
+        secondary="media_genre", back_populates="genres"
+    )    
+
 class MediaGenre(Base):
     __tablename__ = "media_genre"
 
-    media_id: Mapped[int] = mapped_column(ForeignKey("medias.id"), primary_key=True)
+    media_id: Mapped[int] = mapped_column(ForeignKey("media.id"), primary_key=True)
     genre_id: Mapped[int] = mapped_column(ForeignKey("genres.id"), primary_key=True)
 
 class MediaHistory(Base):
@@ -146,7 +150,8 @@ class MediaHistory(Base):
     original_name: Mapped[str] = mapped_column(String[255], nullable=False)
     clean_name: Mapped[str] = mapped_column(String[255], nullable=False)
     removed_tags: Mapped[str] = mapped_column(String[150], nullable=False)
-    movement_date: Mapped[DateTime] = mapped_column(
+    origin_media: Mapped[str] = mapped_column(String[100], nullable=False)
+    movement_date: Mapped[datetime] = mapped_column(
         DateTime,  
         default=datetime.now,
         onupdate=datetime.now,
